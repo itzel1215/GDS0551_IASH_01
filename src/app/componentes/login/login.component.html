@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" (ngSubmit)="login()">
     <p-card header="Ingresar" [style]="{width: '400px'}">
         <div class="field">
             <label for="email">Correo electrónico</label>
@@ -26,12 +26,13 @@
             <div *ngIf="password.hasError('requiere')">Se requiere contraseña</div>
         </small>
         <p-button 
-        label="Ingresar"
-       styleClass="w-full"
-       [disabled]="loginForm.invalid">
-    </p-button>
+            label="Ingresar"
+            styleClass="w-full"
+            [disabled]="loginForm.invalid"
+            type="submit">
+        </p-button>
     <div class="mt-2">
-        ya tienes cuenta? <a routerLink="/register.component.html">Registrate</a>
+        ¿ya tienes cuenta? <a routerLink="/registro">Registrate</a>
     </div>
     </p-card>
 </form>

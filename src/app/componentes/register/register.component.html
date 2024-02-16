@@ -1,18 +1,19 @@
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" (ngSubmit)="enviarRegistro()">
     <p-card header="Registrarse" [style]="{width: '400px'}">
         <div class="field">
-            <label for="name">Nombre</label>
+            <label for="fullName">Nombre completo</label>
             <input 
             type="text" 
             pInputText 
             class="w-full"
+            name="fullName"
             placeholder="Ingrese su nombre"
-            formControlName="name"
+            formControlName="fullName"
             />
         </div>
 
-        <small *ngIf="registerForm.get('name')?.invalid && (registerForm.get('name')?.dirty || registerForm.get('name')?.touched )" class="block p-error">
-            <div *ngIf="registerForm.get('name')?.hasError('required')">Se requiere nombre</div>
+        <small *ngIf="registerForm.get('fullName')?.invalid && (registerForm.get('fullName')?.dirty || registerForm.get('fullName')?.touched )" class="block p-error">
+            <div *ngIf="registerForm.get('fullName')?.hasError('required')">Se requiere nombre</div>
         </small>
 
         <div class="field">
@@ -38,18 +39,31 @@
 
 
         <div class="field">
-            <label for="password">Confirmar contraseña</label>
-            <p-password [toggleMask]="true" formControlName="password"></p-password>
+          <label for="confirmPassword">Confirmar contraseña</label>
+          <input
+          type="password"
+          pInputText
+          formControlName="confirmPassword"
+          class="w-full"
+          name="confirmPassword"
+          placeholder="Confirmar Contraseña"/>
         </div>
-
-        <small *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched )" class="block p-error">
-            <div *ngIf="registerForm.get('password')?.hasError('required')">Se requiere contraseña</div>
+        <small *ngIf="registerForm.get('confirmPassword')?.valid &&
+         (registerForm.get('confirmPassword')?.dirty || registerForm.get('confirmPassword')?.touched)" class="block p-error">
+            <div *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
+                Confirmar Contraseña
+            </div>     
+        </small>
+        <small class="block p-error"
+            *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.valid  && registerForm.get('password')?.valid ">
+                Contraseñas no coinciden
         </small>
 
         <p-button 
         label="Registrarse"
         styleClass="w-full"
-        [disabled]="registerForm.invalid">
+        [disabled]="registerForm.invalid"
+        type="submit">
         </p-button>
 
         <div class="mt-2">
